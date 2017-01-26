@@ -18,6 +18,7 @@ int main(int argc, char * argv[]) {
     if (!file.is_open()) {
         std::cerr << "There was an error opening the specified file\n";
         std::cerr << "verify that it exists\n";
+        return EXIT_FAILURE;
     }
     // How many characters we have read
     unsigned int charcounter = 0; 
@@ -35,7 +36,7 @@ int main(int argc, char * argv[]) {
                   sizeof value);
     }
     // Print an incomplete line if there is one
-    if (CHARS_PER_LINE != 0) {
+    if ((charcounter % CHARS_PER_LINE) != 0) {
         printline(line, charcounter);
     }
 
@@ -46,7 +47,7 @@ void printline(uint8_t line[], unsigned int charcounter) {
     int endpos = (charcounter % CHARS_PER_LINE == 0) ? CHARS_PER_LINE :
         (charcounter % CHARS_PER_LINE);
     // Print the start of line character index
-    printf("%08x: ", charcounter - endpos);
+    printf("%07x: ", charcounter - endpos);
     // Print the bytes in hex
     for (int i = 0; i < CHARS_PER_LINE; i++) {
         if (i < endpos) {
