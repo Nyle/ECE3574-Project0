@@ -53,10 +53,18 @@ void printline(uint8_t line[], unsigned int charcounter) {
             // Print the next byte, with a space after every other
             printf(i % 2 ? "%02x " : "%02x", line[i]);
         } else {
-            // Fill with spaces if line is incomplete
-            printf(i % 2 ? "   " : "  ");
+            // Fill with spaces if line is incomplete (match the spacing of
+            // the printf above)
+            std::cout << (i % 2 ? "   " : "  ");
         }
     }
+    std::cout << ' ';
+    for (int i = 0; i < endpos; i++) {
+        // Print the character if it is in the range of printable ASCII
+        // characters. Otherwise print '.'
+        std::cout << (char)((line[i] >= ' ' && line[i] <= '~') ? line[i] : '.');
+    }
+    
     // End the line
     std::cout << '\n';
     return;
